@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Explore</title>
+</head>
+<body>
+    <a href = "/product"> Go back to Product Management </a> <br> <br>
+    <h1>Updated List of Products:</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Product</th>
+                <th>Price per unit</th>
+                <th>Unit</th>
+                <th>Manufacturing Date</th>
+                <th>Expiry Date</th>
+                <th>Available Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td colspan="7"><h2>{{ category.category_name }}</h2></td>
+            </tr>
+            {% for product in category.products %}
+            <tr>
+                <td></td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.rate }}</td>
+                <td>{{ product.unit }}</td>
+                <td>{{ product.manufacturing_date }}</td>
+                <td>{{ product.expiry_date }}</td>
+                <td>{{ product.available_quantity }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

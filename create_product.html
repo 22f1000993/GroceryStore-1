@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Product</title>
+</head>
+<body>
+    <h1>Add a New Product</h1>
+    <form method="post" action="/product/create">
+        <label>Enter the Product Name:</label>
+        <input name="p_name" type="text" required/>
+        <br><br>
+        <label>Enter the Product Manufacturing Date:</label>
+        <input name="m_date" type="date" required/>
+        <br><br>
+        <label>Enter the Product Expiry Date:</label>
+        <input name="e_date" type="date" required/>
+        <br><br>
+        <label>Enter the Price:</label>
+        <input name="rate" type="number" required/>
+        <br><br>
+        <label>Enter the Unit:</label>
+        <input name="unit" type="text" required/>
+        <br><br>
+        <label>Enter the Quantity Available:</label>
+        <input name="quantity" type="number" required/>
+        <br><br>
+        <label>Enter the Category for this Product:</label>
+        <select name="category">
+            {% for category in cats %}
+            <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <input type="submit" value="Add Product" />
+    </form>
+</body>
+</html>

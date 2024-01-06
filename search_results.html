@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        h1 {
+            color: darkmagenta;
+        }
+
+        h2 {
+            color: blue;
+        }
+
+        h3 {
+            color: darkorange;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <header>
+        <h1>Grocery Store</h1>
+    </header>
+
+    <h3>Search for Products:</h3>
+    <form action="/grocery/store" method="POST">
+        <input type="text" name="query" placeholder="Search by product name">
+        <select name="filter">
+            <option value="product_name">Product Name</option>
+            <option value="category_name">Category</option>
+            <option value="expiry_date">Expiry Date</option>
+            <option value="price">Price</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Your Search Results:</h3>
+    <div id="product-listings">
+        {% if products %}
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Expiry Date</th>
+                <th></th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.category.category_name }}</td>
+                <td>{{ product.rate }}</td>
+                <td>{{ product.expiry_date }}</td>
+                <td>
+                    {% if product.available_quantity > 0 %}
+                        <form action="/add_to_cart" method="POST">
+                            <input type="hidden" name="product_name" value="{{ product.product_name }}">
+                            <input type="hidden" name="price" value="{{ product.rate }}">
+                            <input type="number" name="quantity" value="0">
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    {% else %}
+                        <p>Out of Stock</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No results found.</p>
+        {% endif %}
+    </div>
+    
+    <h3>Inventory of products we offer:</h3>
+    {% for category in categories %}
+    <h2>{{ category.category_name }}</h2>
+    <div id="product-listings">
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Expiry Date</th>
+                <th>Availability</th>
+                <th></th>
+            </tr>
+            {% for product in category.products %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.category.category_name }}</td>
+                <td>{{ product.rate }}</td>
+                <td>{{ product.expiry_date }}</td>
+                <td>
+                    {% if product.available_quantity > 0 %}
+                    <span>In Stock</span>
+                    {% else %}
+                    <span>Out of Stock</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if product.available_quantity > 0 %}
+                    <form action="/add_to_cart" method="POST">
+                        <input type="hidden" name="product_name" value="{{ product.product_name }}">
+                        <input type="hidden" name="price" value="{{ product.rate }}">
+                        <input type="number" name="quantity" value="0">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                    {% else %}
+                    <button disabled>Out of Stock</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</body>
+</html>

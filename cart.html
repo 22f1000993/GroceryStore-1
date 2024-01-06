@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
+  <header>
+    <h1>Cart</h1>
+  </header>
+  <a href = "/grocery/store"> Go back to Store </a> <br> <br>
+  <div id="cart-items">
+    <h2>Cart Items</h2>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item['product_name'] }}</td>
+            <td>{{ item['price'] }}</td>
+            <td>{{ item['quantity'] }}</td>
+            <td>
+                <form action="/remove_from_cart" method="POST">
+                    <input type="hidden" name="product_name" value="{{ item['product_name'] }}">
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>Total: {{ total }}</p>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+  <script>
+    function checkout() {
+      window.location.href = "/endpage";
+    }
+  </script>
+</body>
+</html>

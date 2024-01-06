@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Product</title>
+</head>
+<body>
+    <h1>Remove Product</h1>
+    <form method="post" action="/product/remove">
+        <label>Enter the Product Name:</label>
+        <input name="p_name" type="text" required/>
+        <br><br>
+        <input type="submit" value="Remove Product" onclick="return confirm('Are you sure you want to remove this Product?')" />
+    </form>
+</body>
+</html>
